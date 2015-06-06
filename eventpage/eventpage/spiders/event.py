@@ -2,15 +2,31 @@
 import scrapy
 
 from eventpage.items import EventpageItem
+from scrapy.contrib.spiders import CrawlSpider, Rule
+from scrapy.contrib.linkextractors import LinkExtractor
 
-class EventSpider(scrapy.Spider):
+class EventSpider(CrawlSpider):
     name = "eventpage"
     allowed_domains = ["downtownorlando.com"]
-    start_urls = (
-        'http://www.downtownorlando.com/events/war-drugs/#.VXMYflxViko',
+    start_urls = [
+        'http://www.downtownorlando.com/future/events/?2015-06'
+    ]
+
+    rules = (
+        # Extract links matching 'category.php' (but not matching 'subsection.php')
+        # and follow links from them (since no callback means follow=True by default).
+        Rule(LinkExtractor(allow=('/events/', ), restrict_xpaths=('//li[@class="event_title"]')), callback='parse_item'),
     )
 
-    def parse(self, response):
+    # def parse_item(self, response):
+    #     self.log('Hi, this is an item page! %s' % response.url)
+    #     item = scrapy.Item()
+    #     item['id'] = response.xpath('//td[@id="item_id"]/text()').re(r'ID: (\d+)')
+    #     item['name'] = response.xpath('//td[@id="item_name"]/text()').extract()
+    #     item['description'] = response.xpath('//td[@id="item_description"]/text()').extract()
+    #     return item
+
+    def parse_item(self, response):
         item = EventpageItem()
         item['date'] = []
         item['content'] = []
