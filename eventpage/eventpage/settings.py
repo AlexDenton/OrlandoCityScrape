@@ -13,5 +13,9 @@ BOT_NAME = 'eventpage'
 SPIDER_MODULES = ['eventpage.spiders']
 NEWSPIDER_MODULE = 'eventpage.spiders'
 
+ITEM_PIPELINES = {
+    'eventpage.pipelines.EventpagePipeline': 100,
+}
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'eventpage (+http://www.yourdomain.com)'
