@@ -43,3 +43,5 @@ Temporary Items
 .apdisk
 
 **/*.json
+**/*.csv
+**/*.ics
