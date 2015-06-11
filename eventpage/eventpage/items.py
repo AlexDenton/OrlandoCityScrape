@@ -9,6 +9,7 @@ import scrapy
 
 
 class EventpageItem(scrapy.Item):
+    url = scrapy.Field()
     location = scrapy.Field()
     date = scrapy.Field()
     title = scrapy.Field()
